@@ -1,0 +1,56 @@
+<!--
+ * @Author: niyongwei
+ * @Date: 2022-03-22 19:41:03
+ * @LastEditors: niyongwei
+ * @LastEditTime: 2022-03-24 11:51:15
+ * @FilePath: /EveryDay/2022.3.22/index.html
+ * @Description: 
+ * 
+ * Copyright (c) 2022 by nyw, All Rights Reserved. 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="download()">下载</button>
+    <script>
+        function downloadMp3(filePath) {
+            fetchJsonp(filePath).then(res => res.blob()).then(blob => {
+                console.log(blob)
+                const a = document.createElement('a');
+                document.body.appendChild(a)
+                a.style.display = 'none'
+                const url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = 'xxxx.mp3';
+                a.click();
+                document.body.removeChild(a)
+                window.URL.revokeObjectURL(url);
+            });
+        }
+        var getUrl = function (day) {
+            return `https://static.gesedna.com/audios/listenV2/day${day}_gyz.mp3`
+        }
+        var arr = []
+        for (var i = 0; i < 2; i++) {
+            arr.push(getUrl(i))
+        }
+
+        function download() {
+            arr.forEach(e => {
+                this.downloadMp3(e);
+            })
+
+        }
+    </script>
+    <script src="./index.js"></script>
+</body>
+
+</html>
